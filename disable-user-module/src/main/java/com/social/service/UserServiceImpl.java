@@ -3,6 +3,7 @@ package com.social.service;
 import com.social.model.User;
 import com.social.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -11,9 +12,10 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
     @Override
+    @Transactional
     public User disable(UUID userId) {
         User user = repository.getUserById(userId)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("No such user found: " + userId));
         if(user.isActive()){
             user.setActive(false);
         }
@@ -21,9 +23,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User activate(UUID userId) {
         User user = repository.getUserById(userId)
-                .orElseThrow();
+                .orElseThrow(() -> new RuntimeException("No such user found: " + userId));
         if(!user.isActive()){
             user.setActive(true);
         }
