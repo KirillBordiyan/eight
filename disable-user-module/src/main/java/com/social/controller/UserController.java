@@ -1,7 +1,7 @@
 package com.social.controller;
 
-import com.social.jwt.JwtRequest;
-import com.social.model.User;
+import com.social.model.dto.UserRequestDto;
+import com.social.model.dto.UserResponseDto;
 import com.social.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,12 +15,25 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    /*
+   + 1. контроллер на создание
+   + 2. апдейтнуть сервис
+   + 3. прописать аннотации маппера
+   + 4. просмотреть дто
+    5. **прокинуть редис
+    6. прописать эндпоинты
+     */
+
+    @PostMapping("/create")
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){
+        return new ResponseEntity<>(
+                userService.create(userRequestDto),
+                HttpStatus.CREATED
+        );
+    }
 
     @PutMapping("/disable/{userId}")
-    //проверки jwt маловероятно, что нужны будут, есть отдельное по ним
-//    @PreAuthorize("@ExpressionName.methodForAdminOnly(#jwt)")
-    public ResponseEntity<User> disableUser(@RequestParam UUID userId,
-                                            @RequestHeader JwtRequest jwt) {
+    public ResponseEntity<UserResponseDto> disableUser(@PathVariable UUID userId) {
         return new ResponseEntity<>(
                 userService.disable(userId),
                 HttpStatus.ACCEPTED
@@ -28,12 +41,15 @@ public class UserController {
     }
 
     @PutMapping("/activate/{userId}")
-//    @PreAuthorize("@ExpressionName.methodForAdminOnly(#jwt)")
-    public ResponseEntity<User> activateUser(@RequestParam UUID userId,
-                                             @RequestHeader JwtRequest jwt) {
+    public ResponseEntity<UserResponseDto> activateUser(@PathVariable UUID userId) {
         return new ResponseEntity<>(
                 userService.activate(userId),
                 HttpStatus.ACCEPTED
         );
+    }
+
+    @GetMapping("/check-active")
+    public ResponseEntity<Boolean> isActive(@PathVariable UUID userId) {
+        return new ResponseEntity<>(userService.isActive(userId), HttpStatus.OK);
     }
 }
