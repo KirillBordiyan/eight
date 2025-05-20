@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
             repository.save(created);
             return userMapper.userEntityToResponse(created);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalStateException("User already exist: " + userRequestDto.getUserId());
         }
     }
 
@@ -57,7 +57,6 @@ public class UserServiceImpl implements UserService {
     public Boolean isActive(UUID userId) {
         User user = repository.getUserById(userId)
                 .orElseThrow(() -> new NoSuchElementException("No such user found: " + userId));
-
         return user.isActive();
     }
 }
