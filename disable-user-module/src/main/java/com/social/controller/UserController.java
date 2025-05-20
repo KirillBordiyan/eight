@@ -17,6 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PutMapping("/disable/{userId}")
+    //проверки jwt маловероятно, что нужны будут, есть отдельное по ним
 //    @PreAuthorize("@ExpressionName.methodForAdminOnly(#jwt)")
     public ResponseEntity<User> disableUser(@RequestParam UUID userId,
                                             @RequestHeader JwtRequest jwt) {
