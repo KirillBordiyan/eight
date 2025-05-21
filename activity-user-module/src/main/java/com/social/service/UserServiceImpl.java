@@ -35,10 +35,9 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponseDto changeStatus(UserRequestDto requestDto) {
         User user = repository.getUserByUserId(requestDto.getUserId())
-                .orElseThrow(() -> new NoSuchElementException("No such user found: " + requestDto.getUserId()));
-
+                .orElseThrow(() -> new NoSuchElementException("No such user found in status change process: " + requestDto.getUserId()));
         if (user.isActive() == requestDto.isActive()) {
-            return userMapper.userEntityToResponse(user);
+            throw new IllegalArgumentException("User activity already: " + user.isActive());
         } else {
             user.setActive(requestDto.isActive());
             return userMapper.userEntityToResponse(repository.save(user));
@@ -49,7 +48,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public UserResponseDto checkStatus(UserRequestDto requestDto) {
         User user = repository.getUserByUserId(requestDto.getUserId())
-                .orElseThrow(() -> new NoSuchElementException("No such user found: " + requestDto.getUserId()));
+                .orElseThrow(() -> new NoSuchElementException("No such user found in search process: " + requestDto.getUserId()));
         return userMapper.userEntityToResponse(user);
     }
 }
