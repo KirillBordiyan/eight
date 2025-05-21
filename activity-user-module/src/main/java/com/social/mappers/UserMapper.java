@@ -6,7 +6,6 @@ import com.social.model.dto.UserResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
-import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,10 +13,10 @@ import org.springframework.stereotype.Component;
 public interface UserMapper {
 
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "isActive", source = "isActive")
+    @Mapping(target = "active", source = "active")
     User userRequestToUserEntity(UserRequestDto dto);
 
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "isActive", source = "isActive")
+    @Mapping(target = "active", source = "active")
     UserResponseDto userEntityToResponse(User user);
 }

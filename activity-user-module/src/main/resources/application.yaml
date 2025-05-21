@@ -5,15 +5,15 @@ spring:
   application:
     name: activity-user-module
   config:
-    import: optinal:file:.env.example[.properties]
+    import: optional:file:activity-user-module/.env.example[.properties]
 
   datasource:
     url: jdbc:postgresql://${DB_HOST}:5555/${POSTGRES_DB}?currentSchema=${POSTGRES_SCHEMA}
     username: ${POSTGRES_USERNAME}
     password: ${POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: create

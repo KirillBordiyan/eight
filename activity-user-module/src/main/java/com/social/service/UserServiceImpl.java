@@ -6,11 +6,13 @@ import com.social.model.dto.UserRequestDto;
 import com.social.model.dto.UserResponseDto;
 import com.social.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -32,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponseDto disable(UUID userId) {
-        User user = repository.getUserById(userId)
+        User user = repository.getUserByUserId(userId)
                 .orElseThrow(() -> new NoSuchElementException("No such user found: " + userId));
         if (user.isActive()) {
             user.setActive(false);
@@ -44,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponseDto activate(UUID userId) {
-        User user = repository.getUserById(userId)
+        User user = repository.getUserByUserId(userId)
                 .orElseThrow(() -> new NoSuchElementException("No such user found: " + userId));
         if (!user.isActive()) {
             user.setActive(true);
@@ -55,7 +57,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public Boolean isActive(UUID userId) {
-        User user = repository.getUserById(userId)
+        User user = repository.getUserByUserId(userId)
                 .orElseThrow(() -> new NoSuchElementException("No such user found: " + userId));
         return user.isActive();
     }

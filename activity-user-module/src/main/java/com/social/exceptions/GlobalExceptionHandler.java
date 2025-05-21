@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return new ExceptionResponse(e.getMessage());
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse handleIllegalStateException(IllegalStateException e){
         return new ExceptionResponse(e.getMessage());
