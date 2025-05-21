@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController("/user")
 @RequiredArgsConstructor
 public class UserController {
@@ -24,24 +22,16 @@ public class UserController {
         );
     }
 
-    @PutMapping("/disable/{userId}")
-    public ResponseEntity<UserResponseDto> disableUser(@PathVariable UUID userId) {
+    @PatchMapping("/status/change")
+    public ResponseEntity<UserResponseDto> changeStatus(@RequestBody UserRequestDto userRequestDto) {
         return new ResponseEntity<>(
-                userService.disable(userId),
+                userService.changeStatus(userRequestDto),
                 HttpStatus.ACCEPTED
         );
     }
 
-    @PutMapping("/activate/{userId}")
-    public ResponseEntity<UserResponseDto> activateUser(@PathVariable UUID userId) {
-        return new ResponseEntity<>(
-                userService.activate(userId),
-                HttpStatus.ACCEPTED
-        );
-    }
-
-    @GetMapping("/check-active")
-    public ResponseEntity<Boolean> isActive(@PathVariable UUID userId) {
-        return new ResponseEntity<>(userService.isActive(userId), HttpStatus.OK);
+    @GetMapping("/status/check")
+    public ResponseEntity<UserResponseDto> activityCheck(@RequestBody UserRequestDto userRequestDto) {
+        return new ResponseEntity<>(userService.checkStatus(userRequestDto), HttpStatus.OK);
     }
 }

@@ -33,32 +33,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserResponseDto disable(UUID userId) {
-        User user = repository.getUserByUserId(userId)
-                .orElseThrow(() -> new NoSuchElementException("No such user found: " + userId));
-        if (user.isActive()) {
-            user.setActive(false);
-        }
+    public UserResponseDto changeStatus(UserRequestDto requestDto) {
+        User user = repository.getUserByUserId(requestDto.getUserId())
+                .orElseThrow(() -> new NoSuchElementException("No such user found: " + requestDto.getUserId()));
 
-        return userMapper.userEntityToResponse(repository.save(user));
-    }
-
-    @Override
-    @Transactional
-    public UserResponseDto activate(UUID userId) {
-        User user = repository.getUserByUserId(userId)
-                .orElseThrow(() -> new NoSuchElementException("No such user found: " + userId));
-        if (!user.isActive()) {
-            user.setActive(true);
+        if (user.isActive() == requestDto.isActive()) {
+            return userMapper.userEntityToResponse(user);
+        } else {
+            user.setActive(requestDto.isActive());
+            return userMapper.userEntityToResponse(repository.save(user));
         }
-        return userMapper.userEntityToResponse(repository.save(user));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Boolean isActive(UUID userId) {
-        User user = repository.getUserByUserId(userId)
-                .orElseThrow(() -> new NoSuchElementException("No such user found: " + userId));
-        return user.isActive();
+    public UserResponseDto checkStatus(UserRequestDto requestDto) {
+        User user = repository.getUserByUserId(requestDto.getUserId())
+                .orElseThrow(() -> new NoSuchElementException("No such user found: " + requestDto.getUserId()));
+        return userMapper.userEntityToResponse(user);
     }
 }
