@@ -10,19 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController("/users")
+@RestController("/user")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    /*
-   + 1. контроллер на создание
-   + 2. апдейтнуть сервис
-   + 3. прописать аннотации маппера
-   + 4. просмотреть дто
-    5. **прокинуть редис
-    6. прописать эндпоинты
-     */
 
     @PostMapping("/create")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto userRequestDto){
