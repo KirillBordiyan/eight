@@ -1,6 +1,10 @@
 package com.social.model.dto;
 
-import lombok.*;
+import com.social.model.Status;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
 
@@ -10,5 +14,5 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserRequestDto {
     private UUID userId;
-    private boolean isActive;
+    private Status status;
 }

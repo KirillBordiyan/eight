@@ -1,7 +1,9 @@
 package com.social.model.dto;
 
+import com.social.model.Status;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
@@ -10,5 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserResponseDto {
     private UUID userId;
-    private boolean isActive;
+    private Status status;
+    private LocalDateTime lastDateChange;
 }

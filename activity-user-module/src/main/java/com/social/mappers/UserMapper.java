@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
 
+    @Mapping(target = "lastDateChange", ignore = true)
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "active", source = "active")
+    @Mapping(target = "status", source = "status")
     User userRequestToUserEntity(UserRequestDto dto);
 
     @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "active", source = "active")
+    @Mapping(target = "status", source = "status")
+    @Mapping(target = "lastDateChange", source = "lastDateChange")
     UserResponseDto userEntityToResponse(User user);
 }
