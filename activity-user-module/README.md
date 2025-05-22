@@ -1,7 +1,7 @@
-запуск контейнера:
+Запуск контейнера:
 * #### docker run --name bank-user-activity-manager -p 5555:5432 -e POSTGRES_USER=manager -e POSTGRES_PASSWORD=1234 -e POSTGRES_DB=activity -d postgres
 
-после запуска самого контейнера, иначе упадет:
+После запуска самого контейнера, иначе упадет:
 * #### set search_path = bank_user_activity;
 
 
