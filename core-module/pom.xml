@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.social</groupId>
-            <artifactId>disable-user-module</artifactId>
+            <artifactId>activity-user-module</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
